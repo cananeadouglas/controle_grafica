@@ -14,7 +14,7 @@ include('conecta_banco.php');
 $idpedido = $_POST['idpedido'];
 
 mysqli_query($conn, "UPDATE pedidos
-        SET concluido = 'Sim' 
+        SET concluido = 'sim' 
         WHERE idpedido = '$idpedido' ") or die(mysqli_error());
         echo "<script>alert('Atualizado, click em OK');</script>";
 

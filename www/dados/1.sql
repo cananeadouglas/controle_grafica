@@ -1,9 +1,10 @@
+CREATE DATABASE IF NOT EXISTS mixcopia;
 USE mixcopia;
 
 CREATE TABLE funcionario (
     idusuario int(11) not null AUTO_INCREMENT,
-    nome varchar (40),
-    usuario varchar (20),
+    nome varchar(40),
+    usuario varchar(20),
     PRIMARY KEY (idusuario)
 );
 
@@ -22,10 +23,11 @@ CREATE TABLE pedidos (
   nomecliente varchar(60) NOT NULL,
   datapedido timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   descricao varchar(150) NOT NULL,
-  pagamento varchar(10),
-  liberadoproducao varchar(10),
+  pagamento varchar(5) NOT NULL,
+  liberadoproducao varchar(5) NOT NULL,
   nomearquivo varchar(160) NOT NULL,
-  concluido varchar(10),
+  concluido varchar(5) NOT NULL,
+  entrega varchar(5) NOT NULL,
   PRIMARY KEY (idpedido)
 );
 

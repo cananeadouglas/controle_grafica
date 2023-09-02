@@ -35,19 +35,34 @@ include ('conecta_banco.php');
 		</header>
 		
 		<article class="inicio">
-<div class="vemelha">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		<div class="vemelha">
 
 <form method="post" action="manda.php" />
 
 <?php
 
 $sql = "SELECT idpedido, f.usuario, valorpedido, nomecliente, descricao
-		FROM pedidos p JOIN funcionario f USING (idusuario) WHERE pagamento = null and liberadoproducao = null  ORDER BY 1";
+		FROM pedidos p JOIN funcionario f USING (idusuario) WHERE pagamento = '' and liberadoproducao = ''  ORDER BY 1;";
 
 $resultado = mysqli_query($conn, $sql);
 
 $sql2 = mysqli_query($conn, "SELECT idpedido, f.usuario, valorpedido, nomecliente, descricao
-		FROM pedidos p JOIN funcionario f USING (idusuario) WHERE pagamento = null and liberadoproducao = null  ORDER BY 1 ") or die(mysqli_error());
+		FROM pedidos p JOIN funcionario f USING (idusuario) WHERE pagamento = '' and liberadoproducao = ''  ORDER BY 1 ") or die(mysqli_error());
 $row = mysqli_num_rows($sql2);
 
 
@@ -75,15 +90,14 @@ if($row > 0){
 	echo "</table><br/>";
 	
 }else{
-	echo "<h4><center>Sem Pedidos no momento<br/><br/>Selecione ID para PAGAMENTO</center></h4>";
+	echo "<h4><center>Pedidos do momento<br/><br/>Selecione ID para PAGAMENTO</center></h4>";
 }
 
-$sql5 = "SELECT idpedido
-		FROM pedidos p JOIN funcionario f USING (idusuario) WHERE pagamento = null and liberadoproducao = null  ORDER BY 1 ";// usuario
+$sql5 = "SELECT idpedido FROM pedidos WHERE pagamento = '' and liberadoproducao = '' ORDER BY 1 ";// usuario
 
 $resultado5 = mysqli_query($conn, $sql5);
 
-//echo "<p><label>E agora o Evento:</label><br>";
+echo "<p><label>Clientes que ainda falta pagar:</label><br>";
 echo "<select type='selected' required='required' value='selecione'  name='idpedido'>";
 
 while($linha5 = mysqli_fetch_array($resultado5)){
@@ -105,8 +119,7 @@ echo " </select></p>"; // fim consulta
 <?php
 
 echo "<h4><center>Selecione ID para Liberar para produção</center></h4>";
-$sql6 = "SELECT idpedido, f.usuario, valorpedido, nomecliente, descricao
-		FROM pedidos p JOIN funcionario f USING (idusuario) WHERE pagamento = '' and liberadoproducao = ''  ORDER BY 1 ";// usuario
+$sql6 = "SELECT idpedido FROM pedidos WHERE pagamento = '' and liberadoproducao = '' ORDER BY 1 ";// usuario
 
 $resultado6 = mysqli_query($conn, $sql6);
 
@@ -131,6 +144,25 @@ echo " </select></p>"; // fim consulta
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="amarelo" >
 
 <form method="post" action="manda.php" />
@@ -138,14 +170,15 @@ echo " </select></p>"; // fim consulta
 <?php
 
 $sql1 = "SELECT idpedido, f.usuario, valorpedido, nomecliente, descricao
-		FROM pedidos p JOIN funcionario f USING (idusuario) WHERE liberadoproducao = 'Sim' and pagamento = '' ORDER BY 1";
+		FROM pedidos p JOIN funcionario f USING (idusuario) WHERE liberadoproducao = 'sim' and pagamento = 'nao' and concluido = 'sim' ORDER BY 1";
 
 $resultado1 = mysqli_query($conn, $sql1);
 
 $sql2 = mysqli_query($conn, "SELECT idpedido, f.usuario, valorpedido, nomecliente, descricao
-		FROM pedidos p JOIN funcionario f USING (idusuario) WHERE liberadoproducao = 'Sim' and pagamento = '' ORDER BY 1") or die(mysqli_error());
+		FROM pedidos p JOIN funcionario f USING (idusuario) WHERE liberadoproducao = 'sim' and pagamento = 'nao' and concluido = 'sim' ORDER BY 1") or die(mysqli_error());
 $row = mysqli_num_rows($sql2);
 
+echo "<p><label>AINDA FALTA O PAGAMENTO:</label><br><br>";
 
 if($row > 0){
 
@@ -175,11 +208,11 @@ if($row > 0){
 }
 
 $sql0 = "SELECT idpedido
-		FROM pedidos p JOIN funcionario f USING (idusuario) WHERE liberadoproducao = 'Sim' and pagamento = '' ORDER BY 1";// usuario
+		FROM pedidos p JOIN funcionario f USING (idusuario) WHERE liberadoproducao = 'sim' and pagamento = 'nao' and concluido = 'sim' ORDER BY 1";// usuario
 
 $resultado0 = mysqli_query($conn, $sql0);
 
-//echo "<p><label>E agora o Evento:</label><br>";
+
 echo "<select type='selected' required='required' value='selecione'  name='idpedido'>";
 
 while($linha0 = mysqli_fetch_array($resultado0)){
@@ -195,7 +228,105 @@ echo " </select></p>"; // fim consulta
 
 </form>
 
-</div><br/><br/>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="verde" >
+
+<form method="post" action="manda4.php" />
+
+<?php
+
+$sql1 = "SELECT idpedido, f.usuario, valorpedido, nomecliente, descricao
+		FROM pedidos p JOIN funcionario f USING (idusuario) WHERE pagamento = 'sim' and concluido = 'sim' and liberadoproducao = 'sim' and entrega = '' ORDER BY 1";
+
+$resultado1 = mysqli_query($conn, $sql1);
+
+$sql2 = mysqli_query($conn, "SELECT idpedido, f.usuario, valorpedido, nomecliente, descricao
+		FROM pedidos p JOIN funcionario f USING (idusuario) WHERE pagamento = 'sim' and concluido = 'sim' and liberadoproducao = 'sim' and entrega = '' ORDER BY 1") or die(mysqli_error());
+$row = mysqli_num_rows($sql2);
+
+
+if($row > 0){
+
+	
+	echo "<table style border='1' align='center'><tr>";
+	echo "<p><label align='center'>Prontos para ENTREGA</label><br>";
+	echo "<th align='center'>IDPEDIDO</th>";
+	echo "<th>USUÁRIO</th>";
+	echo "<th>VALOR</th>";
+	echo "<th>CLIENTE</th>";
+	echo "<th>PEDIDO</th>";
+	//echo "<th>Falta Confirmar </th>";
+	echo "</tr><tr>";
+
+	while($linha1 = mysqli_fetch_array($resultado1)){
+
+	echo "<td align='center'>{$linha1['idpedido']}</td>";
+	echo "<td align='center'>{$linha1['usuario']}</td>";
+	echo "<td align='center'>{$linha1['valorpedido']}</td>";
+	echo "<td align='center'>{$linha1['nomecliente']}</td>";
+	echo "<td align='center'>{$linha1['descricao']}</td></tr>";
+
+}
+
+	echo "</table><br/>";
+	
+}else{
+	echo "<h4><center>Sem Itens Liberados para produção<br/><br/>Selecione ID para PAGAMENTO</center></h4>";
+}
+
+$sql0 = "SELECT idpedido
+		FROM pedidos p JOIN funcionario f USING (idusuario) WHERE pagamento = 'sim' and concluido = 'sim' and liberadoproducao = 'sim' and entrega = '' ORDER BY 1";// usuario
+
+$resultado0 = mysqli_query($conn, $sql0);
+
+echo "<p><label>Fazer entrega</label><br>";
+echo "<select type='selected' required='required' value='selecione'  name='idpedido'>";
+
+while($linha0 = mysqli_fetch_array($resultado0)){
+
+echo "<option>{$linha0['idpedido']}</option>";
+
+}
+
+echo " </select></p>"; // fim consulta
+
+?>
+<input type="submit" value="Entreguei para o cliente esse pedido" />
+
+</form>
+
+</div>
+
+
+<br/><br/>
 		
 		</article>
 		

@@ -41,14 +41,14 @@ include ('conecta_banco.php');
 <form method="post" action="manda3.php" />
 
 <?php
-echo "<center>Liberado por pagamento</center>";
+echo "<center>Liberado por pagamento</center><br>";
 $sql = "SELECT p.idpedido, f.usuario, p.descricao, p.nomearquivo
-		FROM pedidos p JOIN funcionario f USING (idusuario) WHERE pagamento = 'sim' and concluido = '' ORDER BY 1 ";
+		FROM pedidos p JOIN funcionario f USING (idusuario) WHERE pagamento = 'sim' and liberadoproducao = 'sim' and concluido = '' ORDER BY 1 ";
 
 $resultado = mysqli_query($conn, $sql);
 
 $sql2 = mysqli_query($conn, "SELECT idpedido, f.usuario, descricao, nomearquivo
-		FROM pedidos p JOIN funcionario f USING (idusuario) WHERE pagamento = 'sim' and concluido = '' ORDER BY 1 ") or die(mysqli_error());
+		FROM pedidos p JOIN funcionario f USING (idusuario) WHERE pagamento = 'sim' and liberadoproducao = 'sim' and concluido = '' ORDER BY 1 ") or die(mysqli_error());
 $row = mysqli_num_rows($sql2);
 
 
@@ -78,7 +78,7 @@ if($row > 0){
 
 
 $sql5 = "SELECT idpedido
-		FROM pedidos p JOIN funcionario f USING (idusuario) WHERE pagamento = 'sim' and concluido = '' ORDER BY 1";// usuario
+		FROM pedidos p JOIN funcionario f USING (idusuario) WHERE pagamento = 'sim' and liberadoproducao = 'sim' and concluido = '' ORDER BY 1";// usuario
 
 $resultado5 = mysqli_query($conn, $sql5);
 
@@ -102,6 +102,36 @@ echo " </select></p>"; // fim consulta
 </form><br/>
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <form method="post" action="manda3.php" />
 
 <?php
@@ -109,12 +139,15 @@ echo " </select></p>"; // fim consulta
 // novo
 echo "<center>Liberado sem pagamento</center>";
 $sql3 = "SELECT p.idpedido, f.usuario, p.descricao, p.nomearquivo
-		FROM pedidos p JOIN funcionario f USING (idusuario) WHERE liberadoproducao = 'sim' and concluido = '' ORDER BY 1 ";
+		FROM pedidos p JOIN funcionario f USING (idusuario) 
+		WHERE liberadoproducao = 'sim' and pagamento = 'nao' and concluido = '' ORDER BY 1 ";
 
 $resultado2 = mysqli_query($conn, $sql3);
 
+//lista
 $sql2 = mysqli_query($conn, "SELECT idpedido, f.usuario, descricao, nomearquivo
-		FROM pedidos p JOIN funcionario f USING (idusuario) WHERE liberadoproducao = 'sim' and concluido = '' ORDER BY 1 ") or die(mysqli_error());
+		FROM pedidos p JOIN funcionario f USING (idusuario) 
+		WHERE liberadoproducao = 'sim' and pagamento = 'nao' and concluido = '' ORDER BY 1 ") or die(mysqli_error());
 $row = mysqli_num_rows($sql2);
 
 
@@ -139,11 +172,12 @@ if($row > 0){
 	echo "</table><br/>";
 	
 }else{
-	echo "<h4><center>Não tem nenhum iten para Produção<br/><br/>Selecione ID para Conclusão do Item</center></h4>";
+	echo "<h4><center>Não tem nenhum iten (SEM PAGAMENTO) para Produção<br/><br/>Selecione ID para Conclusão do Item</center></h4>";
 }
 
 $sql5 = "SELECT p.idpedido, f.usuario, p.descricao, p.nomearquivo
-		FROM pedidos p JOIN funcionario f USING (idusuario) WHERE liberadoproducao = 'sim' and concluido = '' ORDER BY 1";// usuario
+FROM pedidos p JOIN funcionario f USING (idusuario) 
+WHERE liberadoproducao = 'sim' and pagamento = 'nao' and concluido = '' ORDER BY 1";// usuario
 
 $resultado5 = mysqli_query($conn, $sql5);
 

@@ -61,7 +61,7 @@ echo " </select></p>";
 
 
 <div class="preto"><br/><br/>
-		<input type="text" name="nomecliente" placeholder="Nome do Cliente" required="required" />
+		<input type="text" name="nomecliente" placeholder="Nome do Cliente" required="required" autofocus />
 		<input type="double" name="valorpedido" placeholder="Valor Total no lugar da virgula(,) use o ponto(.)." required="required" />
 		<input type="text" name="descricao" placeholder="Descrição do Produto" required="required" />
 		<input type="text" name="nomearquivo" placeholder="Nome do Arquivo Exato" required="required" />

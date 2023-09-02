@@ -1,5 +1,6 @@
 <META http-equiv="Content-Type" content="text/html, charset=UTF-8"/ >
 
+
 <?php
 include ('conecta_banco.php');
 ?>
@@ -41,7 +42,7 @@ include ('conecta_banco.php');
 
 <form action="" method="post" name="form_busca" >
 
-<input type="text" name="busca" placeholder="Nome do Cliente" required="required" /><br/><br/>
+<input type="text" name="busca" placeholder="Nome do Cliente" required="required" autofocus/><br/><br/>
 <input type="submit" name="botao" value="Pesquisar" />
 
 </form>
@@ -53,15 +54,37 @@ if(isset($_POST['botao'])){
 	
 	$busca = $_POST['busca'];
 	
-	$sql = "SELECT f.nome, p.nomecliente, p.datapedido, p.descricao, p.valorpedido 
-FROM pedidos p, funcionario f WHERE f.idusuario = p.idusuario and p.nomecliente like '%$busca%' or f.nome like '%$busca%'
-ORDER by p.datapedido DESC";
+	$sql00 = "SELECT f.nome, p.nomecliente, p.datapedido, p.descricao, p.nomearquivo, p.valorpedido
+	FROM pedidos p, funcionario f 
+	WHERE f.idusuario = p.idusuario and p.nomecliente like '%$busca%' 
+	or f.nome like '%$busca%' or p.nomearquivo like '%$busca%' or p.descricao like '%$busca%' or p.valorpedido like '%$busca%'
+	ORDER by p.datapedido DESC";
+
+	$sql = "SELECT f.nome, p.nomecliente, p.datapedido, p.descricao, p.nomearquivo, p.valorpedido
+	FROM pedidos p, funcionario f 
+	WHERE f.idusuario = p.idusuario and f.nome like '%$busca%' 
+	 ";
+
+
+
+
+
+
+
 
 $resultado = mysqli_query($conn, $sql);
 
-$sql2 = mysqli_query($conn, "SELECT f.nome, p.nomecliente, p.datapedido, p.descricao, p.valorpedido 
-FROM pedidos p, funcionario f WHERE f.idusuario = p.idusuario and p.nomecliente like '%$busca%' or f.nome like '%$busca%'
+$sql200 = mysqli_query($conn, "SELECT f.nome, p.nomecliente, p.datapedido, p.descricao, p.nomearquivo, p.valorpedido
+FROM pedidos p, funcionario f 
+WHERE f.idusuario = p.idusuario and p.nomecliente like '%$busca%' 
+or f.nome like '%$busca%' or p.nomearquivo like '%$busca%' or p.descricao like '%$busca%' or p.valorpedido like '%$busca%'
 ORDER by p.datapedido DESC") or die(mysqli_error());
+
+$sql2 = mysqli_query($conn, "SELECT f.nome, p.nomecliente, p.datapedido, p.descricao, p.nomearquivo, p.valorpedido
+FROM pedidos p, funcionario f 
+WHERE f.idusuario = p.idusuario and f.nome like '%$busca%' and p.nomecliente like '%$busca%'
+") or die(mysqli_error());
+
 $row = mysqli_num_rows($sql2);
 
 if($row > 0){

@@ -16,7 +16,7 @@ $idpedido = $_POST['idpedido'];
 //echo $idpedido;
 
 mysqli_query($conn, "UPDATE pedidos
-        SET pagamento = 'Sim'
+        SET pagamento = 'sim', liberadoproducao = 'sim'
         WHERE idpedido = '$idpedido' ") or die(mysqli_error());
         echo "<script>alert('Atualizado, click em OK');</script>";
 
