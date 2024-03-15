@@ -55,3 +55,4 @@ $ docker exec -it php-fpm docker-php-ext-install pdo pdo_mysql
 $ docker-compose exec php docker-php-ext-install mysqli pdo pdo_mysql && docker-php-ext-enable mysqli
 
 docker-compose restart
+

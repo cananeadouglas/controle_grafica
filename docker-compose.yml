@@ -19,10 +19,14 @@ services:
       - "./site.conf:/etc/nginx/conf.d/site.conf"
     links:
       - php
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 1G
+
   php:
-    #image: php:7.2-fpm-alpine
     image: cananeadouglas/delicia_php:latest
-    #build: .
     container_name: php-fpm
     networks:
       - wordpress_net
@@ -30,6 +34,12 @@ services:
       - "./www/:/www/"
     links:
       - db
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5' # define 1/2 de cpu
+          memory: 512M # aloca somente 512mb de memoria ram
+
   db:
     image: mysql:5.7
     container_name: mysql
@@ -45,6 +55,12 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: mixcopia
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 5G
+
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: pma
@@ -54,7 +70,12 @@ services:
       - db
     ports:
       - 8081:80
-
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+          
 volumes:
   db-volume:
   dados:
